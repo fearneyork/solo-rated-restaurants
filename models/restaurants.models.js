@@ -8,8 +8,18 @@ exports.selectRestaurants = () => {
     })
 }
 
+exports.selectRestaurantsById = (restaurant_id) => {
+    return db
+    .query(
+        `SELECT * FROM restaurants
+        WHERE restaurant_id = $1;
+        `, [restaurant_id])
+    .then((result) => {
+        return result.rows[0];
+    })
+}
+
 exports.insertRestaurant = (newRestaurant) => {
-    console.log(newRestaurant);
     return db
     .query(
         `INSERT INTO restaurants

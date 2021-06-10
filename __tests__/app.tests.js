@@ -31,7 +31,6 @@ describe('/api/restaurants tests', () => {
         .expect(201)
         .send(newRestaurant)
         .then(({body}) => {
-            console.log(body);
             expect(body.restaurant).toHaveProperty("restaurant_id");
             expect(body.restaurant).toHaveProperty("restaurant_name");
             expect(body.restaurant).toHaveProperty("area_id");
@@ -40,8 +39,30 @@ describe('/api/restaurants tests', () => {
     });
     test('DELETE /api/restaurants/:id - status 204', () => {
         return request(app)
-        .delete("/api/restaurants/2")
+        .delete("/api/restaurants/1")
         .expect(204);
     });
+    test('GET /api/restaurants/:id - status 200 - responds with object of restaurants props', () => {
+        const restaurant_id = 2;
+        return request(app)
+        .get(`/api/restaurants/${restaurant_id}`)
+        .expect(200)
+        .then(({body}) => {
+            expect(typeof body).toBe("object");
+            expect(body.restaurant).toHaveProperty("restaurant_id");
+            expect(body.restaurant.restaurant_id).toBe(restaurant_id);
+        })
+    });
 });
+
+// describe('Error handling tests', () => {
+//     test('status 400 - responds with an error message when passed a bad restaurant ID', () => {
+//         return request(app)
+//         .get("/api/restaurants/three")
+//         .expect(400)
+//         .then(({body}) => {
+//             expect(body.message).toBe("invalid input")
+//         })
+//     });
+// });
 
