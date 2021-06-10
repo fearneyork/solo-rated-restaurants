@@ -28,3 +28,8 @@ exports.insertRestaurant = (newRestaurant) => {
         return result.rows[0];
     })
 }
+
+exports.deleteRestrauntById = (restaurant_id) => {
+    return db
+    .query(`DELETE FROM restaurants WHERE restaurant_id = $1;`, [restaurant_id])
+}

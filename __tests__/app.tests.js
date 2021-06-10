@@ -32,10 +32,16 @@ describe('/api/restaurants tests', () => {
         .send(newRestaurant)
         .then(({body}) => {
             console.log(body);
-        })
+            expect(body.restaurant).toHaveProperty("restaurant_id");
+            expect(body.restaurant).toHaveProperty("restaurant_name");
+            expect(body.restaurant).toHaveProperty("area_id");
+            expect(body.restaurant).toHaveProperty("cuisine");
+            expect(body.restaurant).toHaveProperty("website");        })
     });
     test('DELETE /api/restaurants/:id - status 204', () => {
-        
+        return request(app)
+        .delete("/api/restaurants/2")
+        .expect(204);
     });
 });
 
