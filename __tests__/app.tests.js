@@ -55,14 +55,23 @@ describe('/api/restaurants tests', () => {
     });
 });
 
-// describe('Error handling tests', () => {
-//     test('status 400 - responds with an error message when passed a bad restaurant ID', () => {
-//         return request(app)
-//         .get("/api/restaurants/three")
-//         .expect(400)
-//         .then(({body}) => {
-//             expect(body.message).toBe("invalid input")
-//         })
-//     });
-// });
+describe.only('Error handling tests', () => {
+    test('status 400 - responds with an error message when passed a bad restaurant ID', () => {
+        return request(app)
+        .get("/api/restaurants/three")
+        .expect(400)
+        .then(({body}) => {
+            expect(body.message).toBe("invalid input")
+        })
+    });
+    test('status 404 - responds with object containing status code and error message', () => {
+        return request(app)
+        .get("/api/restaurants/15")
+        .expect(404)
+        .then(({body}) => {
+            expect(body.message).toBe("No Restaurant found for restaurant ID of 15")
+            console.log(body);
+        })
+    });
+});
 

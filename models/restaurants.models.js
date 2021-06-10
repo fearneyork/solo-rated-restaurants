@@ -14,8 +14,10 @@ exports.selectRestaurantsById = (restaurant_id) => {
         `SELECT * FROM restaurants
         WHERE restaurant_id = $1;
         `, [restaurant_id])
-    .then((result) => {
-        return result.rows[0];
+    .then(({rows}) => {
+        const restaurant = rows[0];
+        if (!restaurant) return Promise.reject({ status: 404, message: `No Restaurant found for restaurant ID of ${restaurant_id}`})
+        return restaurant;
     })
 }
 

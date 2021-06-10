@@ -6,11 +6,14 @@ exports.getRestaurants = (req, res) => {
     });
 };
 
-exports.getRestaurantsByID = (req, res) => {
+exports.getRestaurantsByID = (req, res, next) => {
     const { restaurant_id } = req.params;
-    selectRestaurantsById(restaurant_id).then((restaurant) => {
-        res.status(200).send({restaurant})
-    })
+    console.log(restaurant_id);
+    selectRestaurantsById(restaurant_id)
+        .then((restaurant) => {
+            res.status(200).send({restaurant})
+        })
+        .catch(next)
 }
 
 exports.postRestaurant = (req, res) => {
